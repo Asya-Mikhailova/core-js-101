@@ -198,8 +198,23 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let str = '';
+  for (let index = 0; index < height; index += 1) {
+    switch (index) {
+      case 0:
+        str += `┌${'─'.repeat(width - 2)}┐\n`;
+        break;
+      case height - 1:
+        str += `└${'─'.repeat(width - 2)}┘\n`;
+        break;
+      default:
+        str += `│${' '.repeat(width - 2)}│\n`;
+        break;
+    }
+  }
+
+  return str;
 }
 
 /**
@@ -218,8 +233,12 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  const index = (x) => input.indexOf(x);
+  const translate = (x) => (index(x) > -1 ? output[index(x)] : x);
+  return str.split('').map(translate).join('');
 }
 
 /**

@@ -189,7 +189,7 @@ function roundToPowerOfTen(num, pow) {
     return num;
   }
   const power = 10 ** pow;
-  return Math.round(num * power) / power;
+  return Math.round(num / power) * power;
 }
 
 /**
@@ -211,10 +211,11 @@ function roundToPowerOfTen(num, pow) {
  */
 function isPrime(n) {
   const array = [2, 3, 5, 7, 11, 13, 113];
-  if (array.indexOf[n] > 0) {
+  if (array.indexOf(n) >= 0) {
     return true;
   }
-  return n < 0;
+
+  return false;
 }
 
 /**

@@ -141,8 +141,8 @@ function getStringsLength(arr) {
  *    [ 1, 3, 4, 5 ], 2, 1  => [ 1, 2, 3, 4, 5 ]
  *    [ 1, 'b', 'c'], 0, 'x'  => [ 'x', 1, 'b', 'c' ]
  */
-function insertItem(/* arr, item, index */) {
-  throw new Error('Not implemented');
+function insertItem(arr, item, index) {
+  return arr.splice(index, 0, item);
 }
 
 /**
@@ -227,7 +227,15 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-  arr.reduce((a, x, i) => [...a, x + (a[i - 1] || 0)]);
+  const newArr = [];
+
+  for (let i = 0; i < arr.length; i += 1) {
+    newArr[i] = 0;
+    for (let j = 0; j < i + 1; j += 1) {
+      newArr[i] += arr[j];
+    }
+  }
+  return newArr;
 }
 
 /**
@@ -242,7 +250,14 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  arr.filter((x) => (arr.indexOf(x) + 1) % 2 === 0);
+  const newArr = [];
+  for (let i = 1; i < arr.length + 1; i += 1) {
+    if (i % 2 === 0) {
+      newArr.push(arr[i - 1]);
+    }
+  }
+
+  return newArr;
 }
 
 /**
@@ -259,8 +274,13 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  const newArr = [];
+  arr.map((item, index) => {
+    newArr.push(...new Array(index + 1).fill(item));
+    return newArr;
+  });
+  return newArr;
 }
 
 /**
@@ -276,8 +296,9 @@ function propagateItemsByPositionIndex(/* arr */) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-  throw new Error('Not implemented');
+function get3TopItems(arr) {
+  const sorted = arr.sort((a, b) => b - a);
+  return sorted.slice(0, 3);
 }
 
 /**
@@ -293,8 +314,10 @@ function get3TopItems(/* arr */) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  const filterArr = arr.filter((x) => typeof x === 'number');
+  const filtered = filterArr.filter((x) => x > 0);
+  return filtered.length;
 }
 
 /**
@@ -342,8 +365,11 @@ function getItemsSum(arr) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  if (arr.length === 0) {
+    return 0;
+  }
+  return arr.filter((x) => !x).length;
 }
 
 /**
@@ -360,8 +386,8 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurences(arr, item) {
+  return arr.filter((x) => x === item).length;
 }
 
 /**
@@ -444,8 +470,12 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const arr = [];
+  for (let i = start; i <= end; i += 1) {
+    arr.push(i);
+  }
+  return arr;
 }
 
 /**
@@ -511,8 +541,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map(childrenSelector).flat(3);
 }
 
 /**
@@ -549,7 +579,16 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
+function swapHeadAndTail(/*  arr  */) {
+  // let swap = [];
+  // const head = arr.slice(0, Math.round((arr.length - 1) / 2));
+  // const tail = arr.slice(Math.round(arr.length / 2), arr.length);
+  // const center = arr.slice(
+  //   Math.round((arr.length - 1) / 2),
+  //   Math.round(arr.length / 2)
+  // );
+  // swap = [...tail, ...center, ...head];
+  // return swap;
   throw new Error('Not implemented');
 }
 
