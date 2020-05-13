@@ -93,8 +93,8 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  return a + b > c && a + c > b && b + c > a;
 }
 
 /**
@@ -159,7 +159,16 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
+function isInsideCircle(/*  circle, point  */) {
+  // const maxX = circle.center.x + circle.radius;
+  // const maxY = circle.center.y + circle.radius;
+  // const minX = circle.center.x - circle.radius;
+  // const minY = circle.center.y - circle.radius;
+
+  // if (point.x < maxX && point.x > minX && point.y < maxY && point.y > minY) {
+  //   return true;
+  // }
+  // return false;
   throw new Error('Not implemented');
 }
 
@@ -174,8 +183,14 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  for (let i = 0; i < str.length; i += 1) {
+    const first = str.charAt(i);
+    if (str.indexOf(first) === i && str.indexOf(first, i + 1) === -1) {
+      return first;
+    }
+  }
+  return null;
 }
 
 /**
@@ -216,8 +231,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 /**
@@ -232,8 +247,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return String(num).split('').reverse().join('');
 }
 
 /**
@@ -274,8 +289,16 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const arr = String(num).split('');
+  let sum = arr.reduce((a, b) => +a + +b);
+  if (sum > 9) {
+    sum = String(sum)
+      .split('')
+      .reduce((a, b) => +a + +b);
+    return sum;
+  }
+  return sum;
 }
 
 /**
@@ -299,7 +322,7 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
+function isBracketsBalanced(/*  str  */) {
   throw new Error('Not implemented');
 }
 
